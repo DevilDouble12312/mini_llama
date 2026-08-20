@@ -1,0 +1,18 @@
+#pragma once
+
+#include "mini_llama/tensor.h"
+
+namespace mini_llama {
+  enum class MatmulMode{
+    kNaive,
+    kThreaded,
+    kSimd,
+    kThreadedSimd
+  };
+
+  MatmulMode DefaultMatmulMode();
+
+  Tensor MatmulDispatch(const Tensor& a, const Tensor& b, MatmulMode mode);
+
+  Tensor LinearDispatch(const Tensor& x, const Tensor& weight, MatmulMode mode);
+} // namespace mini_llama

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiniLlama Chat</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦙</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <!-- ============ 侧边栏 ============ -->
+  <aside id="sidebar">
+    <button id="new-chat-btn" class="new-chat-btn">
+      <span class="plus">+</span> 新对话
+    </button>
+    <div id="conv-list"></div>
+    <div id="sidebar-footer">
+      <div id="model-badge" class="model-badge" title="服务器状态">
+        <span id="status-dot" class="dot"></span>
+        <span id="model-name">mini-llama</span>
+      </div>
+      <button id="settings-btn" class="icon-btn" title="设置">⚙</button>
+    </div>
+  </aside>
+
+  <!-- ============ 主区域 ============ -->
+  <main id="main">
+    <header id="topbar">
+      <button id="sidebar-toggle" class="icon-btn" title="收起/展开侧边栏">☰</button>
+      <div id="chat-title">新对话</div>
+      <button id="clear-btn" class="icon-btn" title="清空当前对话">🗑</button>
+    </header>
+
+    <div id="messages">
+      <div id="welcome" class="welcome">
+        <div class="welcome-logo">🦙</div>
+        <h1>MiniLlama Chat</h1>
+        <p>基于你自己的 mini-llama 推理引擎，本地运行，数据不出机器。</p>
+        <div class="welcome-tips">
+          <span>💬 流式输出</span>
+          <span>🎛 温度 / 长度可调</span>
+          <span>📚 会话历史本地保存</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 停止生成按钮（生成中显示） -->
+    <div id="stop-wrap" class="stop-wrap hidden">
+      <button id="stop-btn">■ 停止生成</button>
+    </div>
+
+    <!-- ============ 输入区 ============ -->
+    <div id="composer-wrap">
+      <div id="composer">
+        <textarea id="input" rows="1" placeholder="输入消息…（Enter 发送，Shift+Enter 换行）"></textarea>
+        <button id="send-btn" title="发送">➤</button>
+      </div>
+      <div id="hint">mini-llama 为本地实验模型，生成内容可能不准确</div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ 设置弹窗 ============ -->
+<div id="settings-modal" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>⚙ 生成设置</h2>
+      <button id="modal-close" class="icon-btn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="setting-row">
+        <label for="max-tokens">最大生成长度 <span id="max-tokens-val">32</span></label>
+        <input type="range" id="max-tokens" min="1" max="128" step="1" value="32">
+      </div>
+      <div class="setting-row">
+        <label for="temperature">温度（0 = 贪心，越高越随机） <span id="temperature-val">0.0</span></label>
+        <input type="range" id="temperature" min="0" max="1.5" step="0.05" value="0">
+      </div>
+      <div class="setting-row">
+        <label for="use-context" class="check-label">
+          <input type="checkbox" id="use-context" checked>
+          携带对话上下文（把最近 10 条消息一起发给模型）
+        </label>
+      </div>
+      <div class="setting-row">
+        <label for="stream" class="check-label">
+          <input type="checkbox" id="stream" checked>
+          流式输出（逐字显示，需要服务端支持 SSE）
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
