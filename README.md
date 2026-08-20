@@ -13,4 +13,9 @@ make
 
 2, 使用接口监听
 
+./mini-llama serve models/tiny --port 8080
+
+找到输出的Web UI:    http://localhost:8080/
+
+![Uploading image.png…]()
 
